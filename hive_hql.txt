@@ -1,0 +1,8 @@
+
+LOAD DATA LOCAL INPATH '/home/jordan_log/request_2013_12_26_14.log' INTO TABLE request;
+
+CREATE TABLE IF NOT EXISTS request2 (jordanGUID STRING, domain STRING, ip STRING, sfrom STRING, location_url STRING, request_datetime STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+
+LOAD DATA LOCAL INPATH '/home/jordan2_logs/request_2013_12_30_13.log' INTO TABLE request2
+
+select domain, count(1) cnt from request a where a.domain<>'' group by a.domain sort by a.cnt desc;

@@ -18,13 +18,14 @@ try:
     client = ThriftHive.Client(protocol)
     transport.open()
 
-    tableName = "request_%s" %((datetime.now()-timedelta(days=5)).strftime("%Y_%m_%d_%H"))
-    tableName = "request_2013_12_26_15"
-    client.execute("CREATE TABLE %s (jordanGUID STRING, domain STRING, sfrom STRING, location_url STRING, request_datetime STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'" %(tableName))
-    print "1-----------"
+    tableName = "request_%s" %((datetime.now()-timedelta(hours=1)).strftime("%Y_%m_%d"))
+    logName = "request_%s" %((datetime.now()-timedelta(hours=1)).strftime("%Y_%m_%d_%H"))
+    # tableName = "request_2013_12_26_15"
+    print "process begin -----------" + str(datetime.now())
+    client.execute("CREATE TABLE IF NOT EXISTS %s (jordanGUID STRING, domain STRING, domain STRING, sfrom STRING, location_url STRING, request_datetime STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'" %(tableName))
     # client.execute("LOAD DATA LOCAL INPATH '/home/jordan_log/%s.log' OVERWRITE INTO TABLE %s" %(tableName,tableName)) 
-    client.execute("LOAD DATA LOCAL INPATH '/home/jordan_logs/%s.log' INTO TABLE %s" %(tableName,tableName)) 
-    print "2-----------"
+    client.execute("LOAD DATA LOCAL INPATH '/home/jordan_logs/%s.log' INTO TABLE %s" %(logName,tableName)) 
+    print "process end -----------" + str(datetime.now())
     # client.execute("SELECT * FROM pokes")
     # while (1):
     #   row = client.fetchOne()
